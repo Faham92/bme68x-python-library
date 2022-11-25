@@ -7,7 +7,7 @@ if BSEC:
     ext_comp_args = ['-D BSEC']
     libs = ['pthread', 'm', 'rt', 'algobsec']
     lib_dirs = ['/usr/local/lib',
-                'BSEC_2.0.6.1_Generic_Release_04302021/algo/normal_version/bin/RaspberryPi/PiThree_ArmV6']
+                'BSEC_2-2-0-0_Generic_Release_3005202022/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8']
 else:
     ext_comp_args = []
     libs = ['pthread', 'm', 'rt']
@@ -49,7 +49,7 @@ setup(name='bme68x',
       py_modules=['bme68xConstants', 'bsecConstants'],
       package_data={
           'bme68x': [
-               'BSEC_2.0.6.1_Generic_Release_04302021/config/bsec_sel_iaq_33v_4d/2021_04_29_02_51_bsec_h2s_nonh2s_2_0_6_1 .config',
+               'BSEC_2-2-0-0_Generic_Release_30052022/config/bsec_sel_iaq_33v_3s_4d/2022_05_17_01_09_bsec_h2s_nonh2s_2_2_0_0 .config',
           ]
       },
       headers=['BME68x-Sensor-API/bme68x.h',
