@@ -19,8 +19,8 @@
 #include "BME68x-Sensor-API/bme68x_defs.h"
 
 #ifdef BSEC
-#include "BSEC_2.0.6.1_Generic_Release_04302021/algo/normal_version/bin/RaspberryPi/PiThree_ArmV6/bsec_interface.h"
-#include "BSEC_2.0.6.1_Generic_Release_04302021/algo/normal_version/bin/RaspberryPi/PiThree_ArmV6/bsec_datatypes.h"
+#include "bsec_2-2-0-0_generic_release_30052022/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/bsec_interface.h"
+#include "bsec_2-2-0-0_generic_release_30052022/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/bsec_datatypes.h"
 #endif
 
 /* CPP guard */
