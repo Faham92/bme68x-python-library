@@ -1,3 +1,4 @@
+
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h"
@@ -18,7 +19,7 @@ uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 uint8_t work_buffer[BSEC_MAX_WORKBUFFER_SIZE];
 uint32_t bsec_state_len = 0;
 bsec_library_return_t bsec_status = BSEC_OK;
-const char *bsec_conf_path = "BSEC_2.0.6.1_Generic_Release_04302021/config/bsec_sel_iaq_33v_4d/2021_04_29_02_51_bsec_h2s_nonh2s_2_0_6_1 .config";
+const char *bsec_conf_path = "bsec_2-2-0-0_generic_release_30052022/config/bsec_sel_iaq_33v_3s_4d/2022_05_17_01_09_bsec_h2s_nonh2s_2_2_0_0 .config";
 FILE *bsec_conf;
 #endif
 
@@ -385,10 +386,10 @@ static PyObject *bme_subscribe_gas_estimates(BMEObject *self, PyObject *args)
     for (uint8_t i = 0; i < n_requested_virtual_sensors; i++)
     {
         requested_virtual_sensors[i].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1 + i;
-        requested_virtual_sensors[i].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+        requested_virtual_sensors[i].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     }
     requested_virtual_sensors[n_requested_virtual_sensors].sensor_id = BSEC_OUTPUT_RAW_GAS_INDEX;
-    requested_virtual_sensors[n_requested_virtual_sensors].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[n_requested_virtual_sensors].sample_rate = BSEC_SAMPLE_RATE_SCAN;
 
     self->rslt = bsec_update_subscription(requested_virtual_sensors, n_requested_virtual_sensors, required_sensor_settings, &n_required_sensor_settings);
 
@@ -405,15 +406,15 @@ static PyObject *bme_subscribe_ai_classes(BMEObject *self)
     uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
 
     requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1;
-    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_2;
-    requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[2].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_3;
-    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[3].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_4;
-    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[4].sensor_id = BSEC_OUTPUT_RAW_GAS_INDEX;
-    requested_virtual_sensors[4].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[4].sample_rate=BSEC_SAMPLE_RATE_SCAN;
 
     self->rslt = bsec_update_subscription(requested_virtual_sensors, n_requested_virtual_sensors, required_sensor_settings, &n_required_sensor_settings);
 
@@ -1066,10 +1067,6 @@ static PyObject *bme_get_digital_nose_data(BMEObject *self)
                                     case BSEC_OUTPUT_RAW_HUMIDITY:
                                         PyDict_SetItemString(bsec_data, "raw_humidity", Py_BuildValue("d", bsec_outputs[index].signal));
                                         break;
-                                    case BSEC_OUTPUT_COMPENSATED_GAS:
-                                        PyDict_SetItemString(bsec_data, "comp_gas_value", Py_BuildValue("d", bsec_outputs[index].signal));
-                                        PyDict_SetItemString(bsec_data, "comp_gas_accuracy", Py_BuildValue("i", bsec_outputs[index].accuracy));
-                                        break;
                                     case BSEC_OUTPUT_GAS_PERCENTAGE:
                                         PyDict_SetItemString(bsec_data, "gas_percentage", Py_BuildValue("d", bsec_outputs[index].signal));
                                         PyDict_SetItemString(bsec_data, "gas_percentage_accuracy", Py_BuildValue("i", bsec_outputs[index].accuracy));
@@ -1328,10 +1325,6 @@ static PyObject *bme_get_bsec_data(BMEObject *self)
                             case BSEC_OUTPUT_RAW_HUMIDITY:
                                 PyDict_SetItemString(bsec_data, "raw_humidity", Py_BuildValue("d", bsec_outputs[index].signal));
                                 break;
-                            case BSEC_OUTPUT_COMPENSATED_GAS:
-                                PyDict_SetItemString(bsec_data, "comp_gas_value", Py_BuildValue("d", bsec_outputs[index].signal));
-                                PyDict_SetItemString(bsec_data, "comp_gas_accuracy", Py_BuildValue("i", bsec_outputs[index].accuracy));
-                                break;
                             case BSEC_OUTPUT_GAS_PERCENTAGE:
                                 PyDict_SetItemString(bsec_data, "gas_percentage", Py_BuildValue("d", bsec_outputs[index].signal));
                                 PyDict_SetItemString(bsec_data, "gas_percentage_accuracy", Py_BuildValue("i", bsec_outputs[index].accuracy));
@@ -1584,13 +1577,13 @@ static PyObject *bme_enable_gas_estimates(BMEObject *self)
     uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
 
     requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1;
-    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_2;
-    requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[1].sample_rate=BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[2].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_3;
-    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[3].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_4;
-    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_HIGH_PERFORMANCE;
+    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_SCAN;
 
     self->rslt = bsec_update_subscription(requested_virtual_sensors, n_requested_virtual_sensors, required_sensor_settings, &n_required_sensor_settings);
     printf("ENABLE GAS ESTIMATES RSLT %d\n", self->rslt);
